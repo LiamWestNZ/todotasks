@@ -1,0 +1,44 @@
+<header class="page-header">
+  <span class="page-header__logo">Tasks</span>
+</header>
+
+<main>
+  <div class="todo-container">
+    <div class="todo-header">
+      <h1>Todo List</h1>
+    </div>
+
+    <div class="todo-body">
+      <div class="add-form">
+        <input
+          type="text"
+          placeholder="Add a new task..."
+          [value]="newTitle()"
+          (input)="newTitle.set($any($event.target).value)"
+          (keydown.enter)="addTodo()"
+        />
+        <button (click)="addTodo()" [disabled]="!newTitle().trim()">Add</button>
+      </div>
+
+      @if (error()) {
+        <p class="error">{{ error() }}</p>
+      }
+
+      @if (todos().length === 0) {
+        <p class="empty">There aren't any tasks added, feel free to add one.</p>
+      } @else {
+        <ul>
+          @for (todo of todos(); track todo.id) {
+            <li>
+              <span>{{ todo.title }}</span>
+              <button (click)="deleteTodo(todo.id)" aria-label="Delete">✕</button>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+  </div>
+</main>
+
+<footer class="page-footer">
+</footer>
